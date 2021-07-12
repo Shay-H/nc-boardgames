@@ -9,9 +9,12 @@ const NavBar = () => {
           <Link to="/games">
             <li>Games</li>
           </Link>
-          <li>Categories</li>
-          <li>Reviews</li>
-          <li>Users</li>
+          <Link to="/reviews">
+            <li>Reviews</li>
+          </Link>
+          <Link to="/users">
+            <li>Users</li>
+          </Link>
         </ul>
       </div>
     </nav>

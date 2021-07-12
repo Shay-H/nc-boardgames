@@ -5,9 +5,7 @@
 
 .App {
   text-align: center;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: min-content min-content auto;
+  display: flexbox;
 }
 
 .header-container {
@@ -19,7 +17,8 @@
 #main-header {
   background-color: #333;
   color: whitesmoke;
-  top: 0;
+  position: sticky;
+  top: -15px;
   user-select: none;
 }
 
@@ -33,7 +32,7 @@ a {
   color: black;
   position: -webkit-sticky;
   position: sticky;
-  top: 0;
+  top: 60px;
 }
 
 #main-nav ul {
@@ -53,4 +52,35 @@ a {
 
 #main-nav li:hover {
   background-color: #aaa;
+}
+
+#homepage {
+  margin-top: 40vh;
+  align-items: center;
+}
+
+#user-list {
+  margin: 0;
+  padding: none;
+  border: none;
+  display: grid;
+  grid-column: 2;
+}
+.user-card {
+  list-style-type: none;
+  margin: auto;
+  padding: 0;
+  width: 40%;
+}
+
+.user-card:hover {
+  background-color: #bbb;
+}
+
+.user-card img {
+  width: 100px;
+}
+
+ul {
+  padding: 0;
 }
