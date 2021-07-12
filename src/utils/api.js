@@ -23,3 +23,7 @@ export const getReviews = () => {
 export const getReviewById = (reviewId) => {
   return Api.get(`/reviews/${reviewId}`);
 };
+
+export const getCommentsByReviewId = (reviewId) => {
+  return Api.get(`/reviews/${reviewId}/comments`);
+};

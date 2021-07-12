@@ -84,3 +84,29 @@ a {
 ul {
   padding: 0;
 }
+
+.review {
+  list-style-type: none;
+  padding: 0 10%;
+}
+
+#review-body {
+  text-align: left;
+}
+
+.vote-buttons-container {
+  display: inline;
+}
+
+.vote-buttons-container button:hover {
+  background-color: rgb(151, 151, 190);
+}
+
+.vote-buttons-container button:disabled {
+  background-color: orange;
+  color: blue;
+}
+
+.comments-list {
+  list-style-type: none;
+}
