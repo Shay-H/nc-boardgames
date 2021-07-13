@@ -16,8 +16,8 @@ export const getUserByUsername = (username) => {
   return Api.get(`/users/${username}`);
 };
 
-export const getReviews = () => {
-  return Api.get(`/reviews`);
+export const getReviews = (queries = "") => {
+  return Api.get(`/reviews?${queries}`);
 };
 
 export const getReviewById = (reviewId) => {

@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getCommentsByReviewId } from "../utils/api";
+import { formatDateTime } from "../utils/format";
 
 const Comments = ({ reviewId }) => {
   const [comments, setComments] = useState([]);
   useEffect(() => {
     getCommentsByReviewId(reviewId).then(({ data }) => {
-      setComments(data.comments);
+      setComments(
+        data.comments.sort((commentA, commentB) => commentA - commentB)
+      );
     });
-  });
+  }, [reviewId]);
 
   return (
     <div className="comments">
@@ -25,7 +28,7 @@ const Comments = ({ reviewId }) => {
                 </p>
                 <p className="comment-body">{comment.body}</p>
                 <p className="timestamp">
-                  <i>Created at {reviewId.created_at}</i>
+                  <i>Created at {formatDateTime(comment.created_at)}</i>
                 </p>
               </div>
             </li>

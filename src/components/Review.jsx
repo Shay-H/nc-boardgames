@@ -24,14 +24,28 @@ function Review() {
     setDisabledElements({ downvote: true });
   };
 
+  console.log(review);
   return (
     <div className="review">
+      <img
+        src={review.review_img_url}
+        class="review-img"
+        alt={`${review.title}`}
+      />
       <h2>{review.title}</h2>
-      <p>
-        by
-        <Link to={`/users/${review.owner}`}> {review.owner} </Link>
-      </p>
-      <p> Category: {review.category} </p>
+      <div className="review-info">
+        <p>
+          by
+          <Link to={`/users/${review.owner}`}>
+            {" "}
+            <b>{review.owner}</b>{" "}
+          </Link>
+        </p>
+        <p>
+          {" "}
+          Category: <b>{review.category}</b>{" "}
+        </p>
+      </div>
       <p id="review-body">{review.review_body}</p>
       <p>Votes: {review.votes}</p>
       <VoteButtons

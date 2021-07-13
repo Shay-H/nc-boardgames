@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { getUserByUsername, getUsers } from "../utils/api";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     getUsers().then(({ data }) => {
@@ -15,13 +17,21 @@ const Users = () => {
     });
   }, []);
 
+  const handleClick = (event, username) => {
+    history.push(`/users/${username}`);
+  };
+
   return (
     <div>
       <ul id="user-list">
         {users.map((user) => {
           return (
-            <li className="user-card" key={user.username}>
-              <div>
+            <li key={user.username}>
+              <div
+                className="list-card"
+                onClick={(event) => handleClick(event, user.username)}
+              >
+                <img src={user.avatar_url} alt={`${user.username}'s avatar`} />
                 <p>
                   <b>Username: </b>
                   {user.username}
@@ -29,7 +39,6 @@ const Users = () => {
                 <p>
                   <b>Name: </b> {user.name}
                 </p>
-                <img src={user.avatar_url} alt={`${user.username}'s avatar`} />
               </div>
             </li>
           );

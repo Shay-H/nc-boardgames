@@ -17,8 +17,9 @@
 #main-header {
   background-color: #333;
   color: whitesmoke;
-  position: sticky;
-  top: -15px;
+  /* position: sticky;
+  height: 20vh; */
+  top: 0;
   user-select: none;
 }
 
@@ -27,12 +28,16 @@ a {
   color: inherit;
 }
 
+Link:hover {
+  stroke: #aaa 5px;
+}
+
 #main-nav {
   background-color: #ccc;
   color: black;
   position: -webkit-sticky;
   position: sticky;
-  top: 60px;
+  top: 0;
 }
 
 #main-nav ul {
@@ -66,19 +71,32 @@ a {
   display: grid;
   grid-column: 2;
 }
-.user-card {
+
+.list-card {
   list-style-type: none;
-  margin: auto;
-  padding: 0;
-  width: 40%;
+  background-color: rgb(170, 170, 170);
+  padding: 1px 8px;
+  margin: 10px auto;
+  width: 60vw;
+  min-height: 20vh;
+  min-width: 200px;
+  max-width: 600px;
 }
 
-.user-card:hover {
+.list-card-img-container {
+  max-height: 40vh;
+  overflow: hidden;
+}
+
+.list-card:hover {
   background-color: #bbb;
+  cursor: pointer;
 }
 
-.user-card img {
-  width: 100px;
+.list-card img {
+  padding: 1% 0;
+  max-width: 600px;
+  width: 55vw;
 }
 
 ul {
@@ -87,11 +105,21 @@ ul {
 
 .review {
   list-style-type: none;
-  padding: 0 10%;
+  padding: 0 15%;
+}
+
+.review img {
+  height: 25vh;
 }
 
 #review-body {
   text-align: left;
+}
+
+.review-info {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 40px;
 }
 
 .vote-buttons-container {
@@ -109,4 +137,32 @@ ul {
 
 .comments-list {
   list-style-type: none;
+  text-align: left;
+}
+
+.comment-card {
+  background-color: rgb(170, 170, 170);
+  padding: 1px 8px;
+  margin: 10px auto;
+  width: 60%;
+  min-width: 200px;
+}
+
+.comment-card img {
+}
+
+.timestamp {
+  font-size: x-small;
+  margin: 0vh;
+  text-align: left;
+}
+
+.reviews-title-owner {
+  display: inline-flex;
+  margin: 0 2vw;
+}
+
+.reviews-filter-form {
+  display: inline-flex;
+  justify-content: space-evenly;
 }
