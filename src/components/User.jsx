@@ -1,23 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useRequestData } from "../hooks/useRequestData";
 import { getReviews, getUserByUsername } from "../utils/api";
 import Comments from "./Comments";
 import Loading from "./Loading";
 import ReviewsList from "./ReviewsList";
 
 const User = () => {
-  const [user, setUser] = useState({});
   const { username } = useParams();
-  const [isLoaded, setIsLoaded] = useState(false);
   const [disabledElements, setDisabledElements] = useState({});
-
-  useEffect(() => {
-    setIsLoaded(false);
-    getUserByUsername(username).then(({ data }) => {
-      setUser(data.user);
-      setIsLoaded(true);
-    });
-  }, [username]);
+  const { data: user, isLoaded } = useRequestData(
+    getUserByUsername,
+    "user",
+    username
+  );
 
   if (!isLoaded) return <Loading />;
   return (

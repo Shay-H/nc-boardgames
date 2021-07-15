@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
+import { useRequestData } from "../hooks/useRequestData";
 import {
   deleteReviewByReviewId,
   getReviewById,
@@ -9,21 +10,21 @@ import {
 } from "../utils/api";
 import AddCommentForm from "./AddCommentForm";
 import Comments from "./Comments";
+import Loading from "./Loading";
 import VoteButtons from "./VoteButtons";
 
 function Review({ votedOn, setVotedOn }) {
   const user = useContext(UserContext);
-  const [review, setReview] = useState({});
   const { review_id: reviewId } = useParams();
   const [disabledElements, setDisabledElements] = useState({});
   const [commentsChanged, setCommentsChanged] = useState(0);
   const history = useHistory();
+  const { data: review, isLoaded } = useRequestData(
+    getReviewById,
+    "review",
+    reviewId
+  );
 
-  useEffect(() => {
-    getReviewById(reviewId).then(({ data }) => {
-      setReview(data.review);
-    });
-  }, [reviewId]);
   const [voteChange, setVoteChange] = useState(0);
 
   const handleUpvote = (event) => {
@@ -74,6 +75,7 @@ function Review({ votedOn, setVotedOn }) {
     });
   };
 
+  if (!isLoaded) return <Loading />;
   return (
     <div className="review">
       {user.username === review.owner ? (

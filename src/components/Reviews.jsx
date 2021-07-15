@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
-import { getCategories, getReviews } from "../utils/api";
+import { getCategories, getReviews, postReview } from "../utils/api";
 import { parseCategory, parseFilters } from "../utils/format";
 import Loading from "./Loading";
 import ReviewsList from "./ReviewsList";
 import NewReview from "./NewReview";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 const Reviews = () => {
+  const user = useContext(UserContext);
   const [reviews, setReviews] = useState([]);
   const [reviewsFilter, setReviewsFilter] = useState({
     isLoaded: false,
@@ -14,6 +17,9 @@ const Reviews = () => {
   });
   const parsedReviewQuery = parseFilters(reviewsFilter);
   const [categories, setCategories] = useState([]);
+  const [reviewExpanded, setReviewExpanded] = useState(false);
+  const [reviewToPost, setReviewToPost] = useState({});
+  const [reviewsPosted, setReviewsPosted] = useState(0);
 
   useEffect(() => {
     getCategories().then(({ data }) => {
@@ -30,11 +36,31 @@ const Reviews = () => {
         return newReviewsFilter;
       });
     });
-  }, [parsedReviewQuery]);
+  }, [parsedReviewQuery, reviewsPosted]);
+
+  useEffect(() => {
+    console.log("here");
+    if (reviewToPost.title) {
+      reviewToPost.owner = user.username;
+      postReview(reviewToPost).then((response) => {
+        console.log(response);
+        setReviewsPosted((curr) => curr + 1);
+      });
+    }
+  }, [reviewToPost]);
 
   return (
     <div>
-      <NewReview categories={categories} />
+      <button
+        onClick={() => {
+          setReviewExpanded((curr) => !curr);
+        }}
+      >
+        {reviewExpanded ? "Cancel" : "Post new review"}
+      </button>
+      {reviewExpanded ? (
+        <NewReview categories={categories} setReviewToPost={setReviewToPost} />
+      ) : null}
       <ReviewsFilterForm
         setReviewsFilter={setReviewsFilter}
         categories={categories}
@@ -66,7 +92,6 @@ const ReviewsFilterForm = ({ setReviewsFilter, categories }) => {
     setReviewsFilter((currReviewsFilter) => {
       const newReviewsFilter = { ...currReviewsFilter };
       newReviewsFilter.p += num;
-      console.log(newReviewsFilter);
       return newReviewsFilter;
     });
   };

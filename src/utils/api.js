@@ -47,3 +47,7 @@ export const patchReviewById = (reviewId, reviewPatch) => {
 export const deleteReviewByReviewId = (reviewId) => {
   return Api.delete(`/reviews/${reviewId}`);
 };
+
+export const postReview = (reviewToPost) => {
+  return Api.post(`/reviews`, reviewToPost);
+};
