@@ -3,6 +3,7 @@ import { getCategories, getReviews } from "../utils/api";
 import { parseCategory, parseFilters } from "../utils/format";
 import Loading from "./Loading";
 import ReviewsList from "./ReviewsList";
+import NewReview from "./NewReview";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const Reviews = () => {
@@ -10,9 +11,15 @@ const Reviews = () => {
   const [reviewsFilter, setReviewsFilter] = useState({
     isLoaded: false,
     p: 1,
-    reviews: [],
   });
   const parsedReviewQuery = parseFilters(reviewsFilter);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    getCategories().then(({ data }) => {
+      setCategories(data.categories);
+    });
+  }, []);
 
   useEffect(() => {
     getReviews(parsedReviewQuery).then(({ data }) => {
@@ -27,7 +34,11 @@ const Reviews = () => {
 
   return (
     <div>
-      <ReviewsFilterForm setReviewsFilter={setReviewsFilter} />
+      <NewReview categories={categories} />
+      <ReviewsFilterForm
+        setReviewsFilter={setReviewsFilter}
+        categories={categories}
+      />
       {!reviewsFilter.isLoaded ? (
         <Loading />
       ) : (
@@ -39,9 +50,7 @@ const Reviews = () => {
 
 export default Reviews;
 
-const ReviewsFilterForm = ({ setReviewsFilter }) => {
-  const [categories, setCategories] = useState([]);
-
+const ReviewsFilterForm = ({ setReviewsFilter, categories }) => {
   const addFilterToState = (event, filterCategory) =>
     setReviewsFilter((currReviewsFilter) => {
       const newFilterState = { ...currReviewsFilter };
@@ -61,12 +70,6 @@ const ReviewsFilterForm = ({ setReviewsFilter }) => {
       return newReviewsFilter;
     });
   };
-
-  useEffect(() => {
-    getCategories().then(({ data }) => {
-      setCategories(data.categories);
-    });
-  }, []);
 
   return (
     <div className="reviews-filter-container">

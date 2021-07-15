@@ -245,3 +245,14 @@ ul {
     padding: 0 5vw;
   }
 }
+
+.new-review-form {
+  display: grid;
+  width: 50%;
+  margin: auto;
+}
+
+.new-review-form input {
+  width: 80%;
+  margin: auto;
+}

@@ -17,6 +17,7 @@ const Comments = ({
 }) => {
   const user = useContext(UserContext);
   const [comments, setComments] = useState([]);
+
   useEffect(() => {
     if (reviewId) {
       getCommentsByReviewId(reviewId).then(({ data }) => {
