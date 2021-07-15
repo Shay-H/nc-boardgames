@@ -71,7 +71,9 @@ const Comments = ({
                   </button>
                 ) : null}
               </div>
-              <VoteButtons />
+              {!username && user.username !== comment.author ? (
+                <VoteButtons />
+              ) : null}
             </li>
           );
         })}

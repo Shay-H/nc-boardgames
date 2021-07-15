@@ -3,11 +3,13 @@ import { getCategories, getReviews } from "../utils/api";
 import { parseCategory, parseFilters } from "../utils/format";
 import Loading from "./Loading";
 import ReviewsList from "./ReviewsList";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [reviewsFilter, setReviewsFilter] = useState({
     isLoaded: false,
+    p: 1,
     reviews: [],
   });
   const parsedReviewQuery = parseFilters(reviewsFilter);
@@ -41,8 +43,8 @@ const ReviewsFilterForm = ({ setReviewsFilter }) => {
   const [categories, setCategories] = useState([]);
 
   const addFilterToState = (event, filterCategory) =>
-    setReviewsFilter((currFilterState) => {
-      const newFilterState = { ...currFilterState };
+    setReviewsFilter((currReviewsFilter) => {
+      const newFilterState = { ...currReviewsFilter };
       if (event.target.value !== "") {
         newFilterState[filterCategory] = event.target.value;
       } else {
@@ -50,6 +52,15 @@ const ReviewsFilterForm = ({ setReviewsFilter }) => {
       }
       return newFilterState;
     });
+
+  const iteratePage = (num) => {
+    setReviewsFilter((currReviewsFilter) => {
+      const newReviewsFilter = { ...currReviewsFilter };
+      newReviewsFilter.p += num;
+      console.log(newReviewsFilter);
+      return newReviewsFilter;
+    });
+  };
 
   useEffect(() => {
     getCategories().then(({ data }) => {
@@ -59,6 +70,13 @@ const ReviewsFilterForm = ({ setReviewsFilter }) => {
 
   return (
     <div className="reviews-filter-container">
+      <button
+        onClick={() => {
+          iteratePage(-1);
+        }}
+      >
+        Prev
+      </button>
       <form className="reviews-filter-form">
         <label htmlFor="category-name">Category</label>
         <select
@@ -91,6 +109,13 @@ const ReviewsFilterForm = ({ setReviewsFilter }) => {
           <option value="comment_count">Activity</option>
         </select>
       </form>
+      <button
+        onClick={() => {
+          iteratePage(+1);
+        }}
+      >
+        Next
+      </button>
     </div>
   );
 };

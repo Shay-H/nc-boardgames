@@ -136,6 +136,13 @@ ul {
   flex: 1;
 }
 
+.reviews-filter-container {
+  display: flex;
+  justify-content: space-around;
+  width: 50vw;
+  margin: auto;
+}
+
 .reviews-filter-form {
   padding-top: 2vw;
   display: inline-flex;

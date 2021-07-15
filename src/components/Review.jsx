@@ -1,4 +1,3 @@
-import userEvent from "@testing-library/user-event";
 import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
@@ -29,7 +28,6 @@ function Review({ votedOn, setVotedOn }) {
 
   const handleUpvote = (event) => {
     event.preventDefault();
-    setDisabledElements({ upvote: true });
     const reviewPatch = { review_id: reviewId };
     switch (voteChange) {
       case -1:
@@ -41,8 +39,14 @@ function Review({ votedOn, setVotedOn }) {
       default:
         reviewPatch.inc_votes = -1;
     }
-    patchReviewById(reviewId, reviewPatch);
     setVoteChange(1);
+    setDisabledElements({ upvote: true });
+    patchReviewById(reviewId, reviewPatch)
+      .then(() => {})
+      .catch(() => {
+        setVoteChange(0);
+        setDisabledElements({ upvote: false });
+      });
   };
 
   const handleDownvote = (event) => {
@@ -95,12 +99,16 @@ function Review({ votedOn, setVotedOn }) {
         </p>
       </div>
       <p id="review-body">{review.review_body}</p>
-      <p>Votes: {review.votes + voteChange}</p>
-      <VoteButtons
-        disabledElements={disabledElements}
-        handleDownvote={handleDownvote}
-        handleUpvote={handleUpvote}
-      />
+      {user.username !== review.author ? (
+        <div className="review-vote">
+          <p>Votes: {review.votes + voteChange}</p>
+          <VoteButtons
+            disabledElements={disabledElements}
+            handleDownvote={handleDownvote}
+            handleUpvote={handleUpvote}
+          />
+        </div>
+      ) : null}
       <Comments
         reviewId={reviewId}
         commentsChanged={commentsChanged}

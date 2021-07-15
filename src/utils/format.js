@@ -7,7 +7,7 @@ export const formatDateTime = (dateTime) => {
 
 export const parseFilters = (filterObj) => {
   return Object.keys(filterObj)
-    .filter((key) => typeof filterObj[key] === "string")
+    .filter((key) => ["string", "number"].includes(typeof filterObj[key]))
     .map((key) => {
       return `${key}=${filterObj[key]}`;
     })
