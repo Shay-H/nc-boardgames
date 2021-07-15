@@ -9,7 +9,7 @@
 }
 
 .header-container {
-  width: 80%;
+  width: 80vw;
   overflow: hidden;
   margin: auto;
 }
@@ -72,15 +72,21 @@ Link:hover {
   grid-column: 2;
 }
 
-.list-card {
+.list-card,
+.list-card-alt {
   list-style-type: none;
-  background-color: rgb(170, 170, 170);
+  background-color: rgb(182, 182, 182);
   padding: 1px 8px;
   margin: 10px auto;
   width: 60vw;
   min-height: 20vh;
   min-width: 200px;
-  max-width: 600px;
+  max-width: 500px;
+}
+
+.list-card-alt {
+  background-color: rgb(88, 88, 88);
+  color: whitesmoke;
 }
 
 .list-card-img-container {
@@ -88,14 +94,17 @@ Link:hover {
   overflow: hidden;
 }
 
-.list-card:hover {
-  background-color: #bbb;
+.list-card:hover,
+.list-card-alt:hover {
+  background-color: gold;
+  color: black;
   cursor: pointer;
 }
 
-.list-card img {
+.list-card img,
+.list-card-alt img {
   padding: 1% 0;
-  max-width: 600px;
+  max-width: 500px;
   width: 55vw;
 }
 
@@ -116,10 +125,23 @@ ul {
   text-align: left;
 }
 
-.review-info {
-  display: flex;
-  justify-content: space-around;
-  padding: 0 40px;
+.reviews-title-owner {
+  display: inline-flex;
+  margin: 0 2vw;
+}
+
+.review-title {
+  flex: 4;
+}
+
+.review-owner {
+  flex: 1;
+}
+
+.reviews-filter-form {
+  padding-top: 2vw;
+  display: inline-flex;
+  justify-content: space-evenly;
 }
 
 .vote-buttons-container {
@@ -148,21 +170,45 @@ ul {
   min-width: 200px;
 }
 
-.comment-card img {
-}
-
 .timestamp {
   font-size: x-small;
   margin: 0vh;
   text-align: left;
 }
 
-.reviews-title-owner {
-  display: inline-flex;
-  margin: 0 2vw;
+.user-avatar {
+  height: 25vh;
+  margin: auto;
 }
 
-.reviews-filter-form {
-  display: inline-flex;
-  justify-content: space-evenly;
+.user-reviews-header,
+.user-comments-header {
+  border: solid black;
+  width: 80vw;
+  margin: auto;
+}
+
+.user-reviews-list {
+  display: flex;
+  justify-content: center;
+  width: 70vw;
+  margin: auto;
+}
+
+.comment-form-container textarea {
+  width: 70vw;
+  min-height: 7vw;
+  margin: auto;
+}
+
+.page-not-found {
+  margin-top: 20vh;
+}
+
+@media (min-width: 768px) {
+  .card-info {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 5vw;
+  }
 }

@@ -6,9 +6,6 @@ const NavBar = () => {
     <nav id="main-nav">
       <div className="nav-container">
         <ul>
-          <Link to="/games">
-            <li>Games</li>
-          </Link>
           <Link to="/reviews">
             <li>Reviews</li>
           </Link>

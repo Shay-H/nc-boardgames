@@ -27,3 +27,11 @@ export const getReviewById = (reviewId) => {
 export const getCommentsByReviewId = (reviewId) => {
   return Api.get(`/reviews/${reviewId}/comments`);
 };
+
+export const postCommentByReviewId = (reviewId, commentObj) => {
+  return Api.post(`/reviews/${reviewId}/comments`, commentObj);
+};
+
+export const deleteCommentByCommentId = (commentId) => {
+  return Api.delete(`/comments/${commentId}`);
+};

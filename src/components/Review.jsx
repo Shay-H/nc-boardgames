@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getReviewById } from "../utils/api";
+import AddCommentForm from "./AddCommentForm";
 import Comments from "./Comments";
 import VoteButtons from "./VoteButtons";
 
 function Review() {
   const [review, setReview] = useState({});
   const { review_id: reviewId } = useParams();
-  const [disabledButtons, setDisabledElements] = useState({});
+  const [disabledElements, setDisabledElements] = useState({});
+  const [commentsChanged, setCommentsChanged] = useState(0);
 
   useEffect(() => {
     getReviewById(reviewId).then(({ data }) => {
@@ -24,12 +26,11 @@ function Review() {
     setDisabledElements({ downvote: true });
   };
 
-  console.log(review);
   return (
     <div className="review">
       <img
         src={review.review_img_url}
-        class="review-img"
+        className="review-img"
         alt={`${review.title}`}
       />
       <h2>{review.title}</h2>
@@ -49,11 +50,19 @@ function Review() {
       <p id="review-body">{review.review_body}</p>
       <p>Votes: {review.votes}</p>
       <VoteButtons
-        disabledButtons={disabledButtons}
+        disabledElements={disabledElements}
         handleDownvote={handleDownvote}
         handleUpvote={handleUpvote}
       />
-      <Comments reviewId={reviewId} />
+      <Comments
+        reviewId={reviewId}
+        commentsChanged={commentsChanged}
+        setCommentsChanged={setCommentsChanged}
+      />
+      <AddCommentForm
+        reviewId={reviewId}
+        setCommentsChanged={setCommentsChanged}
+      />
     </div>
   );
 }
