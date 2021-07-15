@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getReviews, getUserByUsername } from "../utils/api";
+import Comments from "./Comments";
 import ReviewsList from "./ReviewsList";
 
 const User = () => {
@@ -57,19 +58,11 @@ const UserReviews = ({ username }) => {
           <ReviewsList reviews={userReviews} />
         </div>
       </div>
-    </div>
-  );
-};
-
-const UserComments = ({ username }) => {
-  const [userComments, setUserComments] = useState([]);
-
-  useEffect(() => {}, [username]);
-
-  return (
-    <div className="user-comments-container">
       <div className="user-comments-header">
         <h3>Comments</h3>
+        <div className="user-comments-list">
+          <Comments username={username} />
+        </div>
       </div>
     </div>
   );

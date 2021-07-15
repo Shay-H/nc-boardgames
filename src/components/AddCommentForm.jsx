@@ -23,6 +23,10 @@ const AddCommentForm = ({ reviewId, setCommentsChanged }) => {
           const newCommentsChanged = currCommentsChanged + 1;
           return newCommentsChanged;
         });
+        setCommentObj({
+          author: user.username,
+          body: "",
+        });
       })
       .catch((err) => {
         setPostError(true);

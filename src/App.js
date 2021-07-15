@@ -19,6 +19,7 @@ function App() {
       "https://cdn.shopify.com/s/files/1/0194/0815/8819/t/7/assets/svg--character--mr-tickle.svg",
     name: "Tom Tickle",
   });
+  const [votedOn, setVotedOn] = useState({ reviews: {}, comments: {} });
 
   return (
     <UserContext.Provider value={user}>
@@ -33,7 +34,7 @@ function App() {
             <Games />
           </Route>
           <Route path="/reviews/:review_id">
-            <Review />
+            <Review votedOn={votedOn} setVotedOn={setVotedOn} />
           </Route>
           <Route exact path="/reviews">
             <Reviews />

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getReviewById } from "../utils/api";
+import { getReviewById, patchReviewById } from "../utils/api";
 import AddCommentForm from "./AddCommentForm";
 import Comments from "./Comments";
 import VoteButtons from "./VoteButtons";
 
-function Review() {
+function Review({ votedOn, setVotedOn }) {
   const [review, setReview] = useState({});
   const { review_id: reviewId } = useParams();
   const [disabledElements, setDisabledElements] = useState({});
@@ -20,10 +20,14 @@ function Review() {
   const handleUpvote = (event) => {
     event.preventDefault();
     setDisabledElements({ upvote: true });
+    const reviewPatch = { review_id: reviewId, inc_votes: 1 };
+    patchReviewById(reviewId, reviewPatch);
   };
   const handleDownvote = (event) => {
     event.preventDefault();
     setDisabledElements({ downvote: true });
+    const reviewPatch = { review_id: reviewId, inc_votes: -1 };
+    patchReviewById(reviewId, reviewPatch);
   };
 
   return (

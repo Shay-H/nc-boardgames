@@ -1,19 +1,36 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
-import { deleteCommentByCommentId, getCommentsByReviewId } from "../utils/api";
+import {
+  deleteCommentByCommentId,
+  getCommentsByReviewId,
+  getCommentsByUsername,
+} from "../utils/api";
 import { formatDateTime } from "../utils/format";
 
-const Comments = ({ reviewId, commentsChanged, setCommentsChanged }) => {
+const Comments = ({
+  reviewId,
+  commentsChanged,
+  setCommentsChanged,
+  username,
+}) => {
   const user = useContext(UserContext);
   const [comments, setComments] = useState([]);
   useEffect(() => {
-    getCommentsByReviewId(reviewId).then(({ data }) => {
-      setComments(
-        data.comments.sort((commentA, commentB) => commentA - commentB)
+    if (reviewId) {
+      getCommentsByReviewId(reviewId).then(({ data }) => {
+        setComments(
+          data.comments.sort((commentA, commentB) => commentA - commentB)
+        );
+      });
+    } else if (username) {
+      getCommentsByUsername(username).then(({ data }) =>
+        setComments(
+          data.comments.sort((commentA, commentB) => commentA - commentB)
+        )
       );
-    });
-  }, [reviewId, commentsChanged]);
+    }
+  }, [reviewId, commentsChanged, username]);
 
   const deleteComment = (commentId) => {
     deleteCommentByCommentId(commentId).then(() => {
@@ -28,11 +45,16 @@ const Comments = ({ reviewId, commentsChanged, setCommentsChanged }) => {
           return (
             <li className="comment" key={comment.comment_id}>
               <div className="comment-card">
+                {username ? (
+                  <Link to={`/reviews/${comment.review_id}`}>
+                    <h4>Go to review</h4>
+                  </Link>
+                ) : null}
                 <p>
                   <Link to={`/users/${comment.author}`}>
                     <b>{comment.author}</b>
                   </Link>
-                  says:
+                  {" said"}:
                 </p>
                 <p className="comment-body">{comment.body}</p>
                 <p className="timestamp">
