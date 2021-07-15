@@ -17,8 +17,6 @@
 #main-header {
   background-color: #333;
   color: whitesmoke;
-  /* position: sticky;
-  height: 20vh; */
   top: 0;
   user-select: none;
 }
@@ -203,6 +201,34 @@ ul {
 
 .page-not-found {
   margin-top: 20vh;
+}
+
+.header-container {
+  margin-left: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-profile {
+  display: flexbox;
+  align-items: center;
+  float: right;
+  width: 15%;
+  min-width: 120px;
+}
+
+.header-profile button {
+  max-height: 20px;
+}
+
+.header-spacing {
+  width: 5%;
+}
+
+.header-profile-avatar {
+  border-radius: 50%;
+  width: 70px;
 }
 
 @media (min-width: 768px) {

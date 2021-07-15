@@ -1,12 +1,15 @@
+import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
 import { getUserByUsername, getUsers } from "../utils/api";
 import Loading from "./Loading";
 
-const Users = () => {
+const Users = ({ setUser }) => {
   const [users, setUsers] = useState([]);
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
+  const loggedInUser = useContext(UserContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -23,6 +26,10 @@ const Users = () => {
 
   const handleClick = (event, username) => {
     history.push(`/users/${username}`);
+  };
+
+  const handleLogIn = (username) => {
+    setUser(username);
   };
 
   if (isLoading) {
@@ -49,6 +56,9 @@ const Users = () => {
                     <b>Name: </b> {user.name}
                   </p>
                 </div>
+                {!loggedInUser.username ? (
+                  <button onClick={() => handleLogIn(user)}>Log in</button>
+                ) : null}
               </div>
             </li>
           );

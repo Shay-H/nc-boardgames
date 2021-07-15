@@ -16,7 +16,7 @@ function App() {
   const [user, setUser] = useState({
     username: "tickle122",
     avatar_url:
-      "https://www.spiritsurfers.net/monastery/wp-content/uploads/_41500270_mrtickle.jpg",
+      "https://cdn.shopify.com/s/files/1/0194/0815/8819/t/7/assets/svg--character--mr-tickle.svg",
     name: "Tom Tickle",
   });
 
