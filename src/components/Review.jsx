@@ -1,37 +1,80 @@
+import userEvent from "@testing-library/user-event";
+import { useContext } from "react";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import { getReviewById, patchReviewById } from "../utils/api";
+import { useParams, Link, useHistory } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
+import {
+  deleteReviewByReviewId,
+  getReviewById,
+  patchReviewById,
+} from "../utils/api";
 import AddCommentForm from "./AddCommentForm";
 import Comments from "./Comments";
 import VoteButtons from "./VoteButtons";
 
 function Review({ votedOn, setVotedOn }) {
+  const user = useContext(UserContext);
   const [review, setReview] = useState({});
   const { review_id: reviewId } = useParams();
   const [disabledElements, setDisabledElements] = useState({});
   const [commentsChanged, setCommentsChanged] = useState(0);
+  const history = useHistory();
 
   useEffect(() => {
     getReviewById(reviewId).then(({ data }) => {
       setReview(data.review);
     });
   }, [reviewId]);
+  const [voteChange, setVoteChange] = useState(0);
 
   const handleUpvote = (event) => {
     event.preventDefault();
     setDisabledElements({ upvote: true });
-    const reviewPatch = { review_id: reviewId, inc_votes: 1 };
+    const reviewPatch = { review_id: reviewId };
+    switch (voteChange) {
+      case -1:
+        reviewPatch.inc_votes = 2;
+        break;
+      case 0:
+        reviewPatch.inc_votes = 1;
+        break;
+      default:
+        reviewPatch.inc_votes = -1;
+    }
     patchReviewById(reviewId, reviewPatch);
+    setVoteChange(1);
   };
+
   const handleDownvote = (event) => {
     event.preventDefault();
-    setDisabledElements({ downvote: true });
-    const reviewPatch = { review_id: reviewId, inc_votes: -1 };
-    patchReviewById(reviewId, reviewPatch);
+    const reviewPatch = { review_id: reviewId };
+    switch (voteChange) {
+      case 1:
+        reviewPatch.inc_votes = -2;
+        break;
+      case 0:
+        reviewPatch.inc_votes = -1;
+        break;
+      default:
+        reviewPatch.inc_votes = 1;
+    }
+    patchReviewById(reviewId, reviewPatch).then(() => {
+      setDisabledElements({ downvote: true });
+      setVoteChange(-1);
+    });
+  };
+
+  const deleteReview = () => {
+    deleteReviewByReviewId(reviewId).then(() => {
+      history.push("/reviews");
+    });
   };
 
   return (
     <div className="review">
+      {user.username === review.owner ? (
+        <button onClick={deleteReview}>Delete Review</button>
+      ) : null}
       <img
         src={review.review_img_url}
         className="review-img"
@@ -52,7 +95,7 @@ function Review({ votedOn, setVotedOn }) {
         </p>
       </div>
       <p id="review-body">{review.review_body}</p>
-      <p>Votes: {review.votes}</p>
+      <p>Votes: {review.votes + voteChange}</p>
       <VoteButtons
         disabledElements={disabledElements}
         handleDownvote={handleDownvote}

@@ -7,7 +7,7 @@ import ReviewsList from "./ReviewsList";
 const User = () => {
   const [user, setUser] = useState({});
   const { username } = useParams();
-  const [disabledButtons, setDisabledButtons] = useState({});
+  const [disabledElements, setDisabledElements] = useState({});
 
   useEffect(() => {
     getUserByUsername(username).then(({ data }) => {
@@ -30,7 +30,7 @@ const User = () => {
         </p>
       </div>
       <div className="user-reviews-and-comments">
-        <UserReviews username={username} />
+        <UserReviews username={username} disabledElements={disabledElements} />
       </div>
     </div>
   );
@@ -38,7 +38,7 @@ const User = () => {
 
 export default User;
 
-const UserReviews = ({ username }) => {
+const UserReviews = ({ username, disabledElements }) => {
   const [userReviews, setUserReviews] = useState([]);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const UserReviews = ({ username }) => {
       <div className="user-comments-header">
         <h3>Comments</h3>
         <div className="user-comments-list">
-          <Comments username={username} />
+          <Comments username={username} disabledElements={disabledElements} />
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import {
   getCommentsByUsername,
 } from "../utils/api";
 import { formatDateTime } from "../utils/format";
+import VoteButtons from "./VoteButtons";
 
 const Comments = ({
   reviewId,
@@ -70,6 +71,7 @@ const Comments = ({
                   </button>
                 ) : null}
               </div>
+              <VoteButtons />
             </li>
           );
         })}
