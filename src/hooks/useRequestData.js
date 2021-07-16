@@ -14,9 +14,9 @@ export const useRequestData = (requestFunc, returnedDataKey, ...funcArgs) => {
         setIsLoaded(true);
       })
       .catch((err) => {
-        console.dir(err);
+        console.log(err);
       });
-  }, [returnedDataKey, requestFunc, ...funcArgs]);
+  }, [returnedDataKey, requestFunc, funcArgs]);
 
   return { data, isLoaded };
 };

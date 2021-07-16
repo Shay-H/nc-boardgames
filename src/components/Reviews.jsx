@@ -4,7 +4,6 @@ import { parseCategory, parseFilters } from "../utils/format";
 import Loading from "./Loading";
 import ReviewsList from "./ReviewsList";
 import NewReview from "./NewReview";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 
@@ -45,7 +44,7 @@ const Reviews = () => {
         setReviewsPosted((curr) => curr + 1);
       });
     }
-  }, [reviewToPost]);
+  }, [reviewToPost, user.username]);
 
   return (
     <div>

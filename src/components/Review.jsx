@@ -13,7 +13,7 @@ import Comments from "./Comments";
 import Loading from "./Loading";
 import VoteButtons from "./VoteButtons";
 
-function Review({ votedOn, setVotedOn }) {
+function Review() {
   const user = useContext(UserContext);
   const { review_id: reviewId } = useParams();
   const [disabledElements, setDisabledElements] = useState({});
@@ -93,9 +93,11 @@ function Review({ votedOn, setVotedOn }) {
         <p>
           by
           <Link to={`/users/${review.owner}`}>
-            {" "}
-            <b>{review.owner}</b>{" "}
+            <b>{review.owner}</b>
           </Link>
+        </p>
+        <p>
+          Designer: <b>{review.designer}</b>
         </p>
         <p>
           {" "}

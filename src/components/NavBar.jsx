@@ -6,12 +6,16 @@ const NavBar = () => {
     <nav id="main-nav">
       <div className="nav-container">
         <ul>
-          <Link to="/reviews">
-            <li>Reviews</li>
-          </Link>
-          <Link to="/users">
-            <li>Users</li>
-          </Link>
+          <li>
+            <Link to="/reviews">
+              <p>Reviews</p>
+            </Link>
+          </li>
+          <li>
+            <Link to="/users">
+              <p>Users</p>
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>
