@@ -39,11 +39,9 @@ const Reviews = () => {
   }, [parsedReviewQuery, reviewsPosted]);
 
   useEffect(() => {
-    console.log("here");
     if (reviewToPost.title) {
       reviewToPost.owner = user.username;
       postReview(reviewToPost).then((response) => {
-        console.log(response);
         setReviewsPosted((curr) => curr + 1);
       });
     }

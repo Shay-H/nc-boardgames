@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import { useRequestData } from "../hooks/useRequestData";
@@ -79,7 +79,9 @@ function Review({ votedOn, setVotedOn }) {
   return (
     <div className="review">
       {user.username === review.owner ? (
-        <button onClick={deleteReview}>Delete Review</button>
+        <button className="delete-button" onClick={deleteReview}>
+          Delete Review
+        </button>
       ) : null}
       <img
         src={review.review_img_url}

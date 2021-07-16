@@ -14,14 +14,20 @@ const NewReview = ({ categories, setReviewToPost }) => {
     setNewReview((currState) => {
       const newState = { ...currState };
       newState[propToEdit] = event.target.value;
-      console.log(newState);
       return newState;
     });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setReviewToPost(newReview, "<<<");
+    setReviewToPost(newReview);
+    setNewReview({
+      title: "",
+      designer: "",
+      review_img_url: "",
+      review_body: "",
+      category: "strategy",
+    });
   };
 
   return (

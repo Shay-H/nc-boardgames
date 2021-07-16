@@ -8,7 +8,6 @@ import ReviewsList from "./ReviewsList";
 
 const User = () => {
   const { username } = useParams();
-  const [disabledElements, setDisabledElements] = useState({});
   const { data: user, isLoaded } = useRequestData(
     getUserByUsername,
     "user",
@@ -31,7 +30,7 @@ const User = () => {
         </p>
       </div>
       <div className="user-reviews-and-comments">
-        <UserReviews username={username} disabledElements={disabledElements} />
+        <UserReviews username={username} />
       </div>
     </div>
   );
@@ -39,7 +38,7 @@ const User = () => {
 
 export default User;
 
-const UserReviews = ({ username, disabledElements }) => {
+const UserReviews = ({ username }) => {
   const [userReviews, setUserReviews] = useState([]);
 
   useEffect(() => {
@@ -62,7 +61,7 @@ const UserReviews = ({ username, disabledElements }) => {
       <div className="user-comments-header">
         <h3>Comments</h3>
         <div className="user-comments-list">
-          <Comments username={username} disabledElements={disabledElements} />
+          <Comments username={username} />
         </div>
       </div>
     </div>

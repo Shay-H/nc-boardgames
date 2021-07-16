@@ -1,13 +1,24 @@
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
 
-const VoteButtons = ({ handleUpvote, handleDownvote, disabledElements }) => {
+const VoteButtons = ({
+  handleUpvote,
+  handleDownvote,
+  disabledElements,
+  commentId,
+}) => {
   return (
     <div className="vote-buttons-container">
-      <button onClick={handleUpvote} disabled={disabledElements?.upvote}>
+      <button
+        onClick={(event) => handleUpvote(event, commentId)}
+        disabled={disabledElements?.upvote}
+      >
         <ThumbUpAltIcon />
       </button>
-      <button onClick={handleDownvote} disabled={disabledElements?.downvote}>
+      <button
+        onClick={(event) => handleDownvote(event, commentId)}
+        disabled={disabledElements?.downvote}
+      >
         <ThumbDownAltIcon />
       </button>
     </div>

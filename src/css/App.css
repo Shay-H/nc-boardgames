@@ -260,3 +260,10 @@ ul {
 .new-review-form {
   margin: 5vh auto 20vh auto;
 }
+
+.delete-button {
+  background-color: red;
+  color: whitesmoke;
+  display: block;
+  margin: auto;
+}

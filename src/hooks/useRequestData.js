@@ -4,6 +4,7 @@ import { useState } from "react";
 export const useRequestData = (requestFunc, returnedDataKey, ...funcArgs) => {
   const [data, setData] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
+  const [doesNotExist, setDoesNotExist] = useState(false);
 
   useEffect(() => {
     setIsLoaded(false);
@@ -12,7 +13,9 @@ export const useRequestData = (requestFunc, returnedDataKey, ...funcArgs) => {
         setData(data[returnedDataKey]);
         setIsLoaded(true);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.dir(err);
+      });
   }, [returnedDataKey, requestFunc, ...funcArgs]);
 
   return { data, isLoaded };
